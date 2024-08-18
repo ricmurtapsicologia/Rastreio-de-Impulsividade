@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreio de Impulsividade </title>
+    <meta property="og:title" content="Rastreio de Impulsividade" />
+    <meta property="og:description" content="Avalie sua impulsividade com esta escala detalhada." />
+    <meta property="og:image" content="https://i.pinimg.com/originals/4c/36/60/4c36602eccb8230a72b6c60b7a4bc2fe.jpg" />
+    <meta property="og:url" content="https://ricmurtapsicologia.github.io/Escala-de-Impulsividade-BIS-11/" />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background: url('https://i.pinimg.com/originals/4c/36/60/4c36602eccb8230a72b6c60b7a4bc2fe.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0px;
+            text-align: center;
+        }
+
+    header {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 12px 12px;
+    width: 100vw; /* Garante que ocupe 100% da largura da viewport */
+    margin: 0;
+    text-align: center;
+    background-image: none;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    height: auto; /* Mantém a altura automática */
+}
+
+        main {
+            width: 80%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95);
+            margin: 50px auto;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            text-align: left;
+            color: black;
+        }
+
+        .question-section {
+            margin-bottom: 20px;
+        }
+
+        .question-section h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #2E8B57;
+        }
+
+        .question {
+            margin: 10px 0;
+            padding: 12px;
+            background-color: rgba(238, 249, 240, 0.9);
+            border-left: 4px solid #5CB85C;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(249, 249, 249, 0.9);
+        }
+
+        .instructions {
+            font-size: 16px;
+            text-align: justify;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .gauge-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .gauge-desc {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .result-section {
+            margin-top: 20px;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .instructions {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            .gauge-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 20px;
+                padding: 20px;
+            }
+            
+            main {
+                padding: 15px;
+            }
+
+            .instructions {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="color: white; font-size: 48px; font-weight: bold; text-align: center; margin: 0; padding: 20px 0;">Rastreio de Impulsividade</h1>
+    </header>
+        <main>
+        <div class="instructions">
+            <p>Esta escala foi desenvolvida para medir a impulsividade. Responda cada questão conforme você realmente se sente, utilizando a seguinte escala para cada afirmação:</p>
+            <p><strong>Nunca ou raramente - Ocasionalmente - Frequentemente - Quase sempre ou sempre</strong></p>
+            <p>Sua honestidade é essencial para garantir a validade dos resultados. Não há respostas corretas ou erradas.</p>
+        </div>
+        <form id="scaleForm">
+            <div class="question">
+        <label>1. Eu planejo tarefas cuidadosamente.*</label>
+        <select name="q1">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>2. Eu faço coisas sem pensar.</label>
+        <select name="q2">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>3. Eu tomo decisões rapidamente.</label>
+        <select name="q3">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>4. Eu sou despreocupado (confio na sorte, "desencanado").</label>
+        <select name="q4">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>5. Eu não presto atenção.</label>
+        <select name="q5">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>6. Eu tenho pensamentos que se atropelam.</label>
+        <select name="q6">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>7. Eu planejo viagens com bastante antecedência.*</label>
+        <select name="q7">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>8. Eu tenho autocontrole.*</label>
+        <select name="q8">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>9. Eu me concentro facilmente.*</label>
+        <select name="q9">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>10. Eu economizo (poupo) regularmente.*</label>
+        <select name="q10">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>11. Eu fico me contorcendo na cadeira em peças de teatro ou palestras.</label>
+        <select name="q11">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>12. Eu penso nas coisas com cuidado.*</label>
+        <select name="q12">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>13. Eu faço planos para me manter no emprego (eu cuido para não perder meu emprego).*</label>
+        <select name="q13">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>14. Eu falo coisas sem pensar.</label>
+        <select name="q14">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>15. Eu gosto de pensar em problemas complexos.*</label>
+        <select name="q15">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>16. Eu troco de emprego.</label>
+        <select name="q16">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>17. Eu ajo por impulso.</label>
+        <select name="q17">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>18. Eu fico entediado com facilidade quando estou resolvendo problemas mentalmente.</label>
+        <select name="q18">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>19. Eu ajo no “calor do momento”.</label>
+        <select name="q19">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>20. Eu mantenho a linha de raciocínio (“não perco o fio da meada”).*</label>
+        <select name="q20">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>21. Eu troco de casa (residência).</label>
+        <select name="q21">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>22. Eu compro coisas por impulso.</label>
+        <select name="q22">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>23. Eu só consigo pensar em uma coisa de cada vez.</label>
+        <select name="q23">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>24. Eu troco de interesses e passatempos (“hobby”).</label>
+        <select name="q24">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>25. Eu gasto ou compro à prestação mais do que ganho.</label>
+        <select name="q25">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>26. Enquanto estou pensando em uma coisa, é comum que outras ideias me venham à cabeça ou ao mesmo tempo.</label>
+        <select name="q26">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>27. Eu tenho mais interesse no presente do que no futuro.</label>
+        <select name="q27">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>28. Eu me sinto inquieto em palestras ou aulas.</label>
+        <select name="q28">
+            <option value="1">Raramente ou nunca</option>
+            <option value="2">De vez em quando</option>
+            <option value="3">Com frequência</option>
+            <option value="4">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>29. Eu gosto de jogos ou desafios mentais.*</label>
+        <select name="q29">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+    <div class="question">
+        <label>30. Eu me preparo para o futuro.*</label>
+        <select name="q30">
+            <option value="4">Raramente ou nunca</option>
+            <option value="3">De vez em quando</option>
+            <option value="2">Com frequência</option>
+            <option value="1">Quase sempre/ sempre</option>
+        </select>
+    </div>
+ </div>
+            <div class="gauge-container">
+                <div id="impulsivityGauge" style="width: 100%;"></div>
+            </div>
+            <button type="button" onclick="calculateScore()">Calcular</button>
+        </form>
+        <div class="result-section" id="results"></div>
+        <button id="whatsappButton" style="display: none;" onclick="sendWhatsApp()">Enviar via WhatsApp</button>
+    </main>
+    <script>
+        let impulsivityGauge;
+        window.onload = function() {
+            impulsivityGauge = new JustGage({
+                id: "impulsivityGauge",
+                value: 0,
+                min: 0,
+                max: 120,
+                title: "Nível de Impulsividade",
+                label: "pontos",
+                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
+            });
+        };
+
+        function calculateScore() {
+            let totalScore = 0;
+            const formData = new FormData(document.getElementById('scaleForm'));
+            formData.forEach((value, key) => {
+                const questionNumber = parseInt(key.substring(1));
+                const score = parseInt(value);
+                // Inverte o score das questões específicas
+                if ([8, 9, 20, 30].includes(questionNumber)) {
+                    totalScore += (5 - score); // Invert score
+                } else {
+                    totalScore += score;
+                }
+            });
+            impulsivityGauge.refresh(totalScore);
+            displayResults(totalScore);
+            document.getElementById("whatsappButton").style.display = "inline-block"; // Exibe o botão do WhatsApp
+        }
+
+        function displayResults(score) {
+            const resultsDiv = document.getElementById('results');
+            const percentile = determinePercentile(score);
+            resultsDiv.innerHTML = `<h2>Resultados</h2><div>Seu nível de impulsividade é: ${score}</div><div>Percentil: ${percentile}</div><div>${interpretPercentile(percentile)}</div>`;
+        }
+
+        function determinePercentile(score) {
+            // Função simulada para determinar o percentil com base na pontuação
+         if (score <= 40) return "Muito Baixo";
+         else if (score <= 55) return "Baixo";
+         else if (score <= 74) return "Médio";
+         else if (score <= 89) return "Alto";
+         else return "Muito Alto";
+        }
+
+        function interpretPercentile(percentile) {
+            switch (percentile) {
+                case "Muito Baixo":
+    return "Capacidade acima da média de inibir comportamentos em curso ou automáticos. Exemplo em relacionamentos afetivos: A pessoa consegue manter a calma e evitar discussões impulsivas, mesmo em situações emocionais intensas. Exemplo em interações interpessoais: Ela tende a pensar antes de falar, evitando comentários que poderiam ser interpretados como insensíveis. Exemplo em contexto profissional: É capaz de focar em tarefas de longo prazo, resistindo à tentação de procrastinar. Exemplo geral: A pessoa consegue resistir ao impulso de fazer compras desnecessárias, mantendo o controle financeiro.";
+
+case "Baixo":
+    return "Bom controle do foco atencional, com algumas ocasiões de impulsividade. Exemplo em relacionamentos afetivos: A pessoa geralmente consegue evitar discussões impulsivas, mas pode, ocasionalmente, reagir de forma emocional em momentos de estresse. Exemplo em interações interpessoais: Pode, em raras ocasiões, fazer comentários sem pensar, mas consegue reparar rapidamente. Exemplo em contexto profissional: Mantém o foco na maioria das tarefas, mas pode se distrair com interrupções ocasionais. Exemplo geral: Geralmente consegue evitar compras impulsivas, mas pode ceder em situações específicas.";
+
+case "Médio":
+    return "Padrões dentro do esperado em inibir comportamentos e gerenciar foco atencional. Exemplo em relacionamentos afetivos: A pessoa consegue manter discussões produtivas na maioria das vezes, mas pode ser influenciada por emoções fortes. Exemplo em interações interpessoais: Pode ocasionalmente falar de forma impulsiva, mas geralmente é capaz de se corrigir. Exemplo em contexto profissional: Equilibra bem a gestão de tempo e tarefas, embora possa ter momentos de distração. Exemplo geral: Tem um controle razoável sobre impulsos, mas pode ocasionalmente ceder a tentações como compras ou comer em excesso.";
+
+case "Alto":
+    return "Dificuldades em inibir comportamentos em curso ou automáticos. Exemplo em relacionamentos afetivos: A pessoa pode frequentemente iniciar discussões acaloradas sem considerar as consequências, prejudicando a comunicação. Exemplo em interações interpessoais: Tende a falar sem pensar, o que pode levar a conflitos com colegas ou amigos. Exemplo em contexto profissional: Pode ter dificuldades em completar tarefas, devido à tendência de se distrair facilmente ou de procrastinar. Exemplo geral: É mais propensa a gastar dinheiro impulsivamente, afetando sua estabilidade financeira.";
+
+case "Muito Alto":
+    return "Significativas dificuldades em controlar impulsividade e foco atencional. Exemplo em relacionamentos afetivos: A pessoa pode ter reações explosivas, dificultando a resolução de conflitos e prejudicando o relacionamento. Exemplo em interações interpessoais: Tem grande dificuldade em controlar o que diz, muitas vezes resultando em ofensas ou mal-entendidos. Exemplo em contexto profissional: Pode lutar para manter a atenção em tarefas importantes, resultando em desempenho inconsistente ou problemas com prazos. Exemplo geral: É extremamente vulnerável a comportamentos impulsivos, como vícios em jogos de azar ou compras compulsivas, que podem ter consequências graves para sua vida pessoal e financeira.";
+
+default:
+    return "Sem interpretação disponível.";
+
+            }
+        }
+
+        function sendWhatsApp() {
+            const score = impulsivityGauge.config.value;
+            const percentile = determinePercentile(score);
+            const message = `Meu nível de impulsividade na Escala de Barratt é: ${score} pontos. Classificação: ${percentile}.`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
