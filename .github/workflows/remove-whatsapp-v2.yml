@@ -1,0 +1,43 @@
+name: Remover WhatsApp de resultados v2
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/remove-whatsapp-v2.yml']
+permissions:
+  contents: write
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove result sharing without changing questionnaire or scoring
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html'); s=p.read_text(encoding='utf-8'); before=s
+          s=re.sub(r'\s*<button\s+id=["\']whatsappButton["\'][^>]*onclick=["\']sendWhatsApp\(\)["\'][^>]*>.*?</button>\s*','\n',s,count=1,flags=re.S|re.I)
+          s=re.sub(r'\s*function\s+sendWhatsApp\s*\(\)\s*\{.*?window\.open\(whatsappUrl,\s*["\']_blank["\']\);\s*\}\s*','\n',s,count=1,flags=re.S|re.I)
+          s=re.sub(r"\s*document\.getElementById\(['\"]whatsappButton['\"]\)\.style\.display\s*=\s*['\"]block['\"];?",'',s,flags=re.I)
+          if s==before: raise SystemExit('NO_WHATSAPP_CHANGE')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Contract check
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          if re.search(r'wa\.me|whatsappButton|sendWhatsApp|whatsappUrl',s,re.I): raise SystemExit('WHATSAPP_RESULT_RESIDUE')
+          for marker in ['id="scaleForm"','name="q1"','name="q30"','function calculateScore','function determinePercentile']:
+              if marker not in s: raise SystemExit('QUESTIONNAIRE_STRUCTURE_CHANGED:'+marker)
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Remove compartilhamento de resultados por WhatsApp'
+          git push
