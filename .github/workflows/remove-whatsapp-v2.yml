@@ -20,7 +20,7 @@ jobs:
           p=Path('index.html'); s=p.read_text(encoding='utf-8'); before=s
           s=re.sub(r'\s*<button\s+id=["\']whatsappButton["\'][^>]*onclick=["\']sendWhatsApp\(\)["\'][^>]*>.*?</button>\s*','\n',s,count=1,flags=re.S|re.I)
           s=re.sub(r'\s*function\s+sendWhatsApp\s*\(\)\s*\{.*?window\.open\(whatsappUrl,\s*["\']_blank["\']\);\s*\}\s*','\n',s,count=1,flags=re.S|re.I)
-          s=re.sub(r"\s*document\.getElementById\(['\"]whatsappButton['\"]\)\.style\.display\s*=\s*['\"]block['\"];?",'',s,flags=re.I)
+          s=re.sub(r"\s*document\.getElementById\(['\"]whatsappButton['\"]\)\.style\.display\s*=\s*['\"](?:block|inline-block)['\"];?\s*(?://[^\n]*)?",'',s,flags=re.I)
           if s==before: raise SystemExit('NO_WHATSAPP_CHANGE')
           p.write_text(s,encoding='utf-8')
           PY
