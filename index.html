@@ -4,15 +4,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Rastreio de Impulsividade </title>
-	<meta property="og:title" content="Rastreio de Impulsividade" />
-	<meta property="og:description" content="Avalie sua impulsividade com esta escala detalhada." />
+	<title>Decisão, planejamento e controle de impulsos</title>
+	<meta property="og:title" content="Decisão, planejamento e controle de impulsos" />
+	<meta property="og:description" content="Rastreio clínico sobre padrões de decisão, planejamento e resposta no dia a dia." />
 	<meta property="og:image" content="https://i.pinimg.com/originals/4c/36/60/4c36602eccb8230a72b6c60b7a4bc2fe.jpg" />
 	<meta property="og:url" content="https://ricmurtapsicologia.github.io/Rastreio-de-Impulsividade/" />
 	<meta property="og:type" content="website" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
 	<style>
 		body {
 		     font-family: Arial, sans-serif;
@@ -105,28 +102,6 @@
 		     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 		 }
 		
-		 .gauge-container {
-		     display: flex;
-		     justify-content: space-around;
-		     margin-top: 20px;
-		 }
-		
-		 .gauge-desc {
-		     margin-top: 10px;
-		     font-size: 16px;
-		     color: #555;
-		     font-weight: bold;
-		 }
-		
-		 .result-section {
-		    margin-top: 20px;
-		    text-align: justify; /* Justifica o texto dos resultados */
-		}
-		
-		 .result-item {
-		     margin-bottom: 10px;
-		 }
-		
 		 @media (max-width: 768px) {
 		     main {
 		         width: 90%;
@@ -140,11 +115,6 @@
 		     button {
 		         padding: 15px;
 		         font-size: 16px;
-		     }
-		
-		     .gauge-container {
-		         flex-direction: column;
-		         align-items: center;
 		     }
 		 }
 		
@@ -173,11 +143,11 @@
 
 <body>
 	<header>
-		<h1 style="color: white; font-size: 48px; font-weight: bold; text-align: center; margin: 0; padding: 20px 0;">Rastreio de Impulsividade</h1>
+		<h1 style="color: white; font-size: 48px; font-weight: bold; text-align: center; margin: 0; padding: 20px 0;">Decisão, planejamento e controle de impulsos</h1>
 	</header>
 	<main>
 		<div class="instructions">
-			<p>Esta escala foi desenvolvida para medir a impulsividade. Responda cada questão conforme você realmente se sente, utilizando a seguinte escala para cada afirmação:</p>
+			<p>Este rastreio observa padrões de decisão, planejamento e resposta no dia a dia. Responda cada questão com base na sua experiência real.</p>
 			<p><strong>Nunca ou raramente - Ocasionalmente - Frequentemente - Quase sempre ou sempre</strong></p>
 			<p>Sua honestidade é essencial para garantir a validade dos resultados. Não há respostas corretas ou erradas.</p>
 		</div>
@@ -461,81 +431,8 @@
 				</select>
 			</div>
 			</div>
-			<div class="gauge-container">
-				<div id="impulsivityGauge" style="width: 100%;"></div>
-			</div>
-			<button type="button" onclick="calculateScore()">Calcular</button>
+			<button type="button" id="btnConcluir">Concluir rastreio</button>
 		</form>
-		<div class="result-section" id="results"></div>
 </main>
-	<script>
-		let impulsivityGauge;
-		window.onload = function() {
-		    impulsivityGauge = new JustGage({
-		        id: "impulsivityGauge",
-		        value: 0,
-		        min: 0,
-		        max: 120,
-		        title: "Nível de Impulsividade",
-		        label: "pontos",
-		        levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-		    });
-		};
-		
-		function calculateScore() {
-		    let totalScore = 0;
-		    const formData = new FormData(document.getElementById('scaleForm'));
-		    formData.forEach((value, key) => {
-		        const questionNumber = parseInt(key.substring(1));
-		        const score = parseInt(value);
-		        // Inverte o score das questões específicas
-		        if ([8, 9, 20, 30].includes(questionNumber)) {
-		            totalScore += (5 - score); // Invert score
-		        } else {
-		            totalScore += score;
-		        }
-		    });
-		    impulsivityGauge.refresh(totalScore);
-		    displayResults(totalScore);
-		}
-		
-		function displayResults(score) {
-		    const resultsDiv = document.getElementById('results');
-		    const percentile = determinePercentile(score);
-		    resultsDiv.innerHTML = `<h2>Resultados</h2><div>Seu nível de impulsividade é: ${score}</div><div>Percentil: ${percentile}</div><div>${interpretPercentile(percentile)}</div>`;
-		}
-		
-		function determinePercentile(score) {
-		    // Função simulada para determinar o percentil com base na pontuação
-		 if (score <= 40) return "Muito Baixo";
-		 else if (score <= 55) return "Baixo";
-		 else if (score <= 74) return "Médio";
-		 else if (score <= 89) return "Alto";
-		 else return "Muito Alto";
-		}
-		
-		function interpretPercentile(percentile) {
-		    switch (percentile) {
-		        case "Muito Baixo":
-		    return "Capacidade acima da média de inibir comportamentos em curso ou automáticos. Exemplo em relacionamentos afetivos: A pessoa consegue manter a calma e evitar discussões impulsivas, mesmo em situações emocionais intensas. Exemplo em interações interpessoais: Ela tende a pensar antes de falar, evitando comentários que poderiam ser interpretados como insensíveis. Exemplo em contexto profissional: É capaz de focar em tarefas de longo prazo, resistindo à tentação de procrastinar. Exemplo geral: A pessoa consegue resistir ao impulso de fazer compras desnecessárias, mantendo o controle financeiro.";
-		
-		case "Baixo":
-		    return "Bom controle do foco atencional, com algumas ocasiões de impulsividade. Exemplo em relacionamentos afetivos: A pessoa geralmente consegue evitar discussões impulsivas, mas pode, ocasionalmente, reagir de forma emocional em momentos de estresse. Exemplo em interações interpessoais: Pode, em raras ocasiões, fazer comentários sem pensar, mas consegue reparar rapidamente. Exemplo em contexto profissional: Mantém o foco na maioria das tarefas, mas pode se distrair com interrupções ocasionais. Exemplo geral: Geralmente consegue evitar compras impulsivas, mas pode ceder em situações específicas.";
-		
-		case "Médio":
-		    return "Padrões dentro do esperado em inibir comportamentos e gerenciar foco atencional. Exemplo em relacionamentos afetivos: A pessoa consegue manter discussões produtivas na maioria das vezes, mas pode ser influenciada por emoções fortes. Exemplo em interações interpessoais: Pode ocasionalmente falar de forma impulsiva, mas geralmente é capaz de se corrigir. Exemplo em contexto profissional: Equilibra bem a gestão de tempo e tarefas, embora possa ter momentos de distração. Exemplo geral: Tem um controle razoável sobre impulsos, mas pode ocasionalmente ceder a tentações como compras ou comer em excesso.";
-		
-		case "Alto":
-		    return "Dificuldades em inibir comportamentos em curso ou automáticos. Exemplo em relacionamentos afetivos: A pessoa pode frequentemente iniciar discussões acaloradas sem considerar as consequências, prejudicando a comunicação. Exemplo em interações interpessoais: Tende a falar sem pensar, o que pode levar a conflitos com colegas ou amigos. Exemplo em contexto profissional: Pode ter dificuldades em completar tarefas, devido à tendência de se distrair facilmente ou de procrastinar. Exemplo geral: É mais propensa a gastar dinheiro impulsivamente, afetando sua estabilidade financeira.";
-		
-		case "Muito Alto":
-		    return "Significativas dificuldades em controlar impulsividade e foco atencional. Exemplo em relacionamentos afetivos: A pessoa pode ter reações explosivas, dificultando a resolução de conflitos e prejudicando o relacionamento. Exemplo em interações interpessoais: Tem grande dificuldade em controlar o que diz, muitas vezes resultando em ofensas ou mal-entendidos. Exemplo em contexto profissional: Pode lutar para manter a atenção em tarefas importantes, resultando em desempenho inconsistente ou problemas com prazos. Exemplo geral: É extremamente vulnerável a comportamentos impulsivos, como vícios em jogos de azar ou compras compulsivas, que podem ter consequências graves para sua vida pessoal e financeira.";
-		
-		default:
-		    return "Sem interpretação disponível.";
-		
-		    }
-		}
-</script>
   <script src="https://ricmurtapsicologia.github.io/plataforma.terapeutica/assets/js/screening-uniformity-v1.js?v=1.0.0" defer></script>
 </body>
