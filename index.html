@@ -466,8 +466,7 @@
 			<button type="button" onclick="calculateScore()">Calcular</button>
 		</form>
 		<div class="result-section" id="results"></div>
-		<button id="whatsappButton" style="display: none;" onclick="sendWhatsApp()">Enviar via WhatsApp</button>
-	</main>
+</main>
 	<script>
 		let impulsivityGauge;
 		window.onload = function() {
@@ -497,7 +496,6 @@
 		    });
 		    impulsivityGauge.refresh(totalScore);
 		    displayResults(totalScore);
-		    document.getElementById("whatsappButton").style.display = "inline-block"; // Exibe o botão do WhatsApp
 		}
 		
 		function displayResults(score) {
@@ -537,14 +535,6 @@
 		
 		    }
 		}
-		
-		function sendWhatsApp() {
-		    const score = impulsivityGauge.config.value;
-		    const percentile = determinePercentile(score);
-		    const message = `Meu nível de impulsividade na Escala de Barratt é: ${score} pontos. Classificação: ${percentile}.`;
-		    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-		    window.open(whatsappUrl, '_blank');
-		}
-	</script>
+</script>
   <script src="https://ricmurtapsicologia.github.io/plataforma.terapeutica/assets/js/screening-uniformity-v1.js?v=1.0.0" defer></script>
 </body>
